@@ -9,8 +9,9 @@ function App() {
     return;
   };
 
-  const handleInputClick = () => {
-    return;
+  const handleInputClick = (itemName) => {
+    setItemList((itemList) => [...itemList, itemName]);
+    setItemName("");
   };
 
   const handleInputChange = (event) => {
@@ -21,29 +22,35 @@ function App() {
     <>
       <h1>Todo App</h1>
 
-      <InputBox handleInputClick={handleInputClick} />
+      <InputBox
+        itemName={itemName}
+        handleInputChange={handleInputChange}
+        handleInputClick={handleInputClick}
+      />
 
       <hr />
 
-      <Item handleItemClick={handleItemClick} />
+      {itemList.map((item) => (
+        <Item itemName={item} handleItemClick={handleItemClick} />
+      ))}
     </>
   );
 }
 
-const InputBox = ({ handleInputClick }) => {
+const InputBox = ({ itemName, handleInputClick, handleInputChange }) => {
   return (
     <>
-      <input type="text" />
-      <button onClick={handleInputClick}>Add item</button>
+      <input type="text" value={itemName} onChange={handleInputChange} />
+      <button onClick={() => handleInputClick(itemName)}>Add item</button>
     </>
   );
 };
 
-const Item = ({ handleItemClick }) => {
+const Item = ({ handleItemClick, itemName }) => {
   return (
     <>
-      <li>Item text goes here</li>
-      <button onClick={handleItemClick}>Click me</button>
+      <li>{itemName}</li>
+      <button onClick={() => handleItemClick(itemName)}>Click me</button>
     </>
   );
 };
