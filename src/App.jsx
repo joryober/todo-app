@@ -47,19 +47,24 @@ function App() {
 
 const InputBox = ({ itemName, handleInputClick, handleInputChange }) => {
   return (
-    <>
-      <input type="text" value={itemName} onChange={handleInputChange} />
+    <div>
+      <input
+        style={{ marginRight: "5px" }}
+        type="text"
+        value={itemName}
+        onChange={handleInputChange}
+      />
       <button onClick={() => handleInputClick(itemName)}>Add item</button>
-    </>
+    </div>
   );
 };
 
 const Item = ({ handleItemClick, itemName, id }) => {
   return (
-    <>
-      <li>{itemName}</li>
+    <ul>
+      <li style={{ paddingBottom: "5px" }}>{itemName}</li>
       <button onClick={() => handleItemClick(id)}>Remove</button>
-    </>
+    </ul>
   );
 };
 
