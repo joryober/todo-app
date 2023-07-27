@@ -11,8 +11,18 @@ function App() {
   };
 
   const handleInputClick = (itemName) => {
-    setItemList((itemList) => [...itemList, { name: itemName, id: uuidv4() }]);
+    itemName &&
+      setItemList((itemList) => [
+        ...itemList,
+        { name: itemName, id: uuidv4() },
+      ]);
     setItemName("");
+  };
+
+  const handleKeyDown = (event, itemName) => {
+    if (event.key === "Enter") {
+      handleInputClick(itemName);
+    }
   };
 
   const handleInputChange = (event) => {
@@ -27,6 +37,7 @@ function App() {
         itemName={itemName}
         handleInputChange={handleInputChange}
         handleInputClick={handleInputClick}
+        handleKeyDown={handleKeyDown}
       />
 
       <hr />
@@ -45,7 +56,12 @@ function App() {
   );
 }
 
-const InputBox = ({ itemName, handleInputClick, handleInputChange }) => {
+const InputBox = ({
+  itemName,
+  handleInputClick,
+  handleInputChange,
+  handleKeyDown,
+}) => {
   return (
     <div>
       <input
@@ -53,6 +69,8 @@ const InputBox = ({ itemName, handleInputClick, handleInputChange }) => {
         type="text"
         value={itemName}
         onChange={handleInputChange}
+        onKeyDown={() => handleKeyDown(event, itemName)}
+        autoFocus
       />
       <button onClick={() => handleInputClick(itemName)}>Add item</button>
     </div>
