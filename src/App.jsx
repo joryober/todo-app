@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [itemName, setItemName] = useState("");
-  const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState(
+    localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(itemList));
+  }, [itemList]);
 
   const handleItemClick = (id) => {
     setItemList((itemList) => itemList.filter((item) => item.id !== id));
